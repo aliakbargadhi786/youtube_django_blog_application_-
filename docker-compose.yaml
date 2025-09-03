@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    container_name: django_blog_app
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  db:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-blog_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-blog_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-youtube_blog_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5433:5432"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
