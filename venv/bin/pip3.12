@@ -1,4 +1,4 @@
-#!/home/aliakbar/youtube_django_blog_application/venv/bin/python3
+#!/var/lib/jenkins/workspace/DJANGO/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
